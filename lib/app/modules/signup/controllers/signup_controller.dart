@@ -1,7 +1,12 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
+import 'package:getx_skeleton/app/services/api_call_status.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 class SignupController extends GetxController {
+
+  String x = "";
 
   final form = FormGroup({
     'fName': FormControl<String>(validators: [Validators.required]),
@@ -12,14 +17,30 @@ class SignupController extends GetxController {
 
 
   signup(){
+
+
+    form.unfocus();
+
     if(!form.valid){
+      form.markAllAsTouched();
       return;
     }
 
     final data = form.rawValue;
-    data['name'] = "";
 
-    print(data);
+    callSignup();
+  }
+
+
+
+  ApiCallStatus signupCallStatus = ApiCallStatus.holding;
+
+  callSignup() async {
+    signupCallStatus = ApiCallStatus.loading;
+    update();
+    await Future.delayed(const Duration(seconds: 4));
+    signupCallStatus = ApiCallStatus.success;
+    update();
   }
 
 

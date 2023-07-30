@@ -74,9 +74,9 @@ class EditText extends StatelessWidget {
             formControlName: controlName,
             showErrors: (control) => control.invalid && control.touched,
             validationMessages: {
-              ValidationMessage.required: (control) => 'هذا الحقل مطلوب',
-              ValidationMessage.email: (control) => 'البريد المدخل غير صحيح',
-              ValidationMessage.minLength: (control) => 'كلمة المرور أقل من 6 حروف',
+              ValidationMessage.required: (control) => 'Required',
+              ValidationMessage.email: (control) => 'Email not valid',
+              ValidationMessage.minLength: (control) => 'Password less than 6 numbers',
               ValidationMessage.max: (control) => 'تجاوزت الحد الأقصى',
             },
           ),

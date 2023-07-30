@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class LightThemeColors
 {
   // PRIMARY
-  static const Color primaryColor = Color(0xFF42A7DE);
+  static const Color primaryColor = Color(0xFF000000);
 
   // SECONDARY COLOR
   static const Color accentColor = Color(0xFFD9EDE1);

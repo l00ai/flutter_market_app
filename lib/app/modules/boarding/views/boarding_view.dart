@@ -40,7 +40,7 @@ class BoardingView extends GetView<BoardingController> {
 
             50.verticalSpace,
 
-            MyButton(
+            IconButton(
               onClicked: () => Get.toNamed(Routes.SIGNUP),
             ),
 
@@ -54,9 +54,9 @@ class BoardingView extends GetView<BoardingController> {
 }
 
 
-class MyButton extends StatelessWidget {
+class IconButton extends StatelessWidget {
   final Function onClicked;
-  const MyButton({Key? key, required this.onClicked}) : super(key: key);
+  const IconButton({Key? key, required this.onClicked}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
