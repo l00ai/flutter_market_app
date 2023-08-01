@@ -1,30 +1,40 @@
 import 'package:get/get.dart';
+import 'package:getx_skeleton/app/components/custom_snackbar.dart';
 
 import '../../../../utils/constants.dart';
 import '../../../services/api_call_status.dart';
 import '../../../services/base_client.dart';
 
 class HomeController extends GetxController {
-  // hold data coming from api
-  List<dynamic>? data;
-  // api call status
-  ApiCallStatus apiCallStatus = ApiCallStatus.holding;
 
-  // getting data from api
-  getData() async {
+
+
+  List<String> categoryList = [];
+  ApiCallStatus categoryStatus = ApiCallStatus.holding;
+
+  getCategories() async {
     // *) perform api call
     await BaseClient.safeApiCall(
-      Constants.todosApiUrl, // url
-      RequestType.get, // request type (get,post,delete,put)
+      Constants.getCategories, // url
+      RequestType.get, // re
+      // quest type (get,post,delete,put)
       onLoading: () {
         // *) indicate loading state
-        apiCallStatus = ApiCallStatus.loading;
+        categoryStatus = ApiCallStatus.loading;
         update();
       },
       onSuccess: (response){ // api done successfully
-        data = List.from(response.data);
+        categoryList = List.from(response.data);
         // *) indicate success state
-        apiCallStatus = ApiCallStatus.success;
+
+        if(categoryList.isNotEmpty){
+          categoryStatus = ApiCallStatus.success;
+        }else{
+          categoryStatus = ApiCallStatus.empty;
+        }
+
+        //CustomSnackBar.showCustomToast(message: "Success");
+
         update();
       },
       // if you don't pass this method base client
@@ -33,15 +43,18 @@ class HomeController extends GetxController {
         // show error message to user
         BaseClient.handleApiError(error);
         // *) indicate error status
-        apiCallStatus = ApiCallStatus.error;
+        categoryStatus = ApiCallStatus.error;
         update();
       },
     );
   }
 
+
+
+
   @override
   void onInit() {
-    getData();
+    getCategories();
     super.onInit();
   }
 }
