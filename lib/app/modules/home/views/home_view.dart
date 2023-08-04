@@ -26,6 +26,7 @@ class HomeView extends GetView<HomeController> {
     Widget categoriesSection = SizedBox(
       height: 64,
       child: GetBuilder<HomeController>(
+        id: "categoryList",
         builder: (ctrl) {
           if(ctrl.categoryStatus == ApiCallStatus.loading){
             return const Center(child: CupertinoActivityIndicator(),);
@@ -56,20 +57,38 @@ class HomeView extends GetView<HomeController> {
     Widget productSection = Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
       color: Colors.grey.shade200,
-      child: GridView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: 10,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 2,
-          mainAxisSpacing: 2,
-          mainAxisExtent: 240,
-        ),
-        itemBuilder: (context, index) => GestureDetector(
-            onTap: () {},
-            // onTap: () => Get.toNamed(Routes.PRODUCT_DETAILS),
-            child: const ProductView()),
+      child: GetBuilder<HomeController>(
+        id: "productList",
+        builder: (ctrl) {
+          if(ctrl.categoryStatus == ApiCallStatus.loading){
+            return const Center(child: CupertinoActivityIndicator(),);
+          }else if(ctrl.categoryStatus == ApiCallStatus.success) {
+            return GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: ctrl.productList.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 2,
+                mainAxisSpacing: 2,
+                mainAxisExtent: 240,
+              ),
+              itemBuilder: (context, index) => GestureDetector(
+                  onTap: () {},
+                  // onTap: () => Get.toNamed(Routes.PRODUCT_DETAILS),
+                  child: ProductView(
+                    product: ctrl.productList[index],
+                  )),
+            );
+          }else if(ctrl.categoryStatus == ApiCallStatus.empty) {
+            return Center(child: Booster.textBody("Empty"),);
+          }else if(ctrl.categoryStatus == ApiCallStatus.error) {
+            return Center(child: Booster.textBody("Error"),);
+          }else{
+            return const SizedBox();
+          }
+
+        }
       ),
     );
 

@@ -31,6 +31,8 @@ dependencies:
 
   flutter_svg:  # display svg vectors
   reactive_forms:
+  location: ^5.0.1
+  permission_handler: ^10.4.3
 
   flutter:
     sdk: flutter

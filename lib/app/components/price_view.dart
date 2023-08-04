@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class PriceView extends StatelessWidget {
-  const PriceView({super.key});
+  final num price;
+  final num discount;
+  const PriceView({super.key, required this.price, required this.discount});
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +29,11 @@ class PriceView extends StatelessWidget {
 
     return Row(
       children: [
-        Text("2200\$", style: priceTextStyle),
+        Text("$price\$", style: priceTextStyle),
         const SizedBox(width: 5),
         Text("2400\$", style: oldPriceTextStyle),
         const SizedBox(width: 5),
-        Text("6% Off", style: offerTextStyle),
+        Text("$discount% Off", style: offerTextStyle),
       ],
     );
   }

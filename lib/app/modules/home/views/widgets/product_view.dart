@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:getx_skeleton/app/data/models/product.dart';
 
 import '../../../../components/price_view.dart';
 
 class ProductView extends StatelessWidget {
-  const ProductView({super.key});
+  final Product product;
+  const ProductView({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -15,36 +17,40 @@ class ProductView extends StatelessWidget {
     Widget imageView = Container(
       color: Colors.white,
       height: 112,
-      child: const Icon(Icons.ac_unit_sharp, size: 64),
+      child:  Image.network(product.images!.first),
     );
 
-    Widget categoryView = const Row(
+    Widget categoryView = Row(
       children: [
-        Icon(
+        const Icon(
           Icons.category,
           size: 16,
         ),
-        SizedBox(width: 4),
+        const SizedBox(width: 4),
         Text(
-          "Exchange",
-          style: TextStyle(
+          product.category ?? "-",
+          style: const TextStyle(
             fontSize: 12,
           ),
         ),
       ],
     );
 
-    String title = "Apple MacBook Pro Core I9 9th Generation";
+    String title = product.title ?? "-";
 
     Widget bodyView = Container(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       height: 128,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(title, style: titleTextStyle),
           const SizedBox(height: 8),
-          const PriceView(),
+          PriceView(
+            price: product.price ?? 0,
+            discount: product.discountPercentage ?? 0,
+          ),
           const SizedBox(height: 8),
           categoryView
         ],
